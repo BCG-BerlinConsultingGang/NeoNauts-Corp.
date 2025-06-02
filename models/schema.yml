@@ -5,6 +5,7 @@ sources:
     schema: neo_bank
     description: "Raw data source for the Neo Bank project"
     tables:
+      
       - name: devices
         description: "Informartion about devices used by customers"
         columns:
@@ -15,6 +16,8 @@ sources:
             tests:
               - unique
               - not_null
+              
+              
           
       - name: notifications
         description: "Information about notifications sent to users"
