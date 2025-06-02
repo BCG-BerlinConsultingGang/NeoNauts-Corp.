@@ -1,21 +1,93 @@
-
 version: 2
 
-models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
+sources:
+  - name: raw_neo_bank
+    schema: neo_bank
+    description: "Raw data source for the Neo Bank project"
+    tables:
+      - name: devices
+        description: "Informartion about devices used by customers"
+        columns:
+          - name: string_field_0
+            description: "Information about the device brand"
+          - name: string_field_1
+            description: "Information about the user id"  
             tests:
-                - unique
-                - not_null
+              - unique
+              - not_null
+          
+      - name: notifications
+        description: "Information about notifications sent to users"
+        columns:
+          - name: reason
+            description: "Reason for the notification (e.g. metal_reserve_plan)"
+          - name: channel
+            description: "Channel through which the notification was sent (push, email, sms)"
+          - name: status
+            description: "Status of the notification (sent or failed)"
+          - name: user_id
+            description: "ID of the user who received the notification"
+          - name: created_date
+            description: "Date when the notification was created"
 
-    - name: my_second_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
+      - name: transactions
+        description: "Information about transactions made by users"
+        columns:
+          - name: transaction_id
+            description: "Unique identifier for the transaction"
             tests:
-                - unique
-                - not_null
+              - unique
+              - not_null
+          - name: transactions_type
+            description: "Type of the transaction (e.g. exchange, fee)"
+          - name: transactions_currency
+            description: "Currency of the transaction (e.g. USD, EUR)"
+          - name: amount_usd
+            description: "Amount of the transaction in USD"
+          - name: transactions_state
+            description: "State of the transaction (e.g. completed, pending)"
+          - name: ea_cardholderpresence
+            description: ""
+          - name: ea_merchant_mcc
+            description: ""
+          - name: ea_merchant_city
+            description: ""
+          - name: ea_merchant_country
+            description: ""
+          - name: direction
+            description: "Direction of the transaction (e.g. inbound, outbound)"
+          - name: user_id
+            description: "ID of the user who made the transaction"
+          - name: created_date
+            description: "Date when the transaction was created"
+
+      - name: users
+        description: "Information about users of the Neo Bank"
+        columns:
+          - name: user_id
+            description: "Unique identifier for the user"
+            tests:
+              - unique
+              - not_null
+          - name: birth_year
+            description: "Year of birth of the user"
+          - name: country
+            description: "Country of residence of the user"
+          - name: city
+            description: "City of residence of the user"
+          - name: created_date
+            description: "Date when the user was created"
+          - name: user_settings_crypto_unlocked
+            description: "Indicates if the user has unlocked crypto settings"
+          - name: plan
+            description: "Plan of the user (e.g. standard, premium)"
+          - name: attributes_notifications_marketing_push
+            description: "Did the user opt-in for marketing push notifications"
+          - name: attributes_notifications_marketing_email
+            description: "Did the user opt-in for marketing email notifications"
+          - name: num_contact
+            description: ""
+          - name: num_referrals
+            description: "Number of referrals made by the user"
+          - name: num_successful_referrals
+            description: "Number of successful referrals made by the user"
