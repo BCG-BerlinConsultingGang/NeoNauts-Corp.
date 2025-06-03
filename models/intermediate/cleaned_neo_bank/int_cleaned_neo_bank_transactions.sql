@@ -6,16 +6,16 @@ General Information on the table:
 
 WITH cleaned_transactions AS (
     SELECT
-        CAST(REPLACE(transaction_id, "transaction_", "") AS INT64) AS transaction_id,
+        CAST(REPLACE(transaction_id, "transaction_", "") AS integer) AS transaction_id,
         transactions_type,
         transactions_currency,
         amount_usd,
         transactions_state,
         ea_cardholderpresence,
-        CAST(ea_merchant_mcc AS INT64) AS ea_merchant_mcc,
+        CAST(ea_merchant_mcc AS integer) AS ea_merchant_mcc,
         ea_merchant_country,
         direction,
-        CAST(REPLACE(user_id, "user_", "") AS INT64) AS user_id,
+        CAST(REPLACE(user_id, "user_", "") AS integer) AS user_id,
         DATE(created_date) AS transaction_date
     FROM {{ ref('stg_raw_neo_bank__transactions') }}
 )
