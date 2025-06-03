@@ -14,7 +14,8 @@ with subquery as(
 
 select 
     s.*, 
-    t.* except(user_id)
+    t.* except(user_id),
+    DATE_DIFF(t.last_transaction_date, s.sign_up_date, DAY) as active_timeframe
     from subquery as s 
         left join {{ ref('int_cleaned_neo_bank_transactions') }} as t 
         USING(user_id)
