@@ -17,3 +17,10 @@ SELECT
     replace(user_id, "user_", "") as user_id, -- remove "user_" from the id and transform to integer
     date(created_date) as transaction_date
 FROM {{ ref('stg_raw_neo_bank__transactions') }}
+
+Select
+    distinct transactions_type,
+    count (*) as nb
+from {{ ref('stg_raw_neo_bank__transactions') }}
+group by transactions_type
+order by nb
