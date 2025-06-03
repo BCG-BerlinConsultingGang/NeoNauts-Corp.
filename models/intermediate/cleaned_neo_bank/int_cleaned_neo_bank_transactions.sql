@@ -29,20 +29,20 @@ SELECT
     MAX(transaction_date) AS last_transaction_date,
 
     -- Transactions Type breakdown (e.g. "card_payment", "refund" etc.)
-    COUNTIF(transactions_type = 'REFUND') AS transactions_type_purchase,
-    COUNTIF(transactions_type = 'TAX') AS transactions_type_withdrawal,
-    COUNTIF(transactions_type = 'CARD_REFUND') AS transactions_type_deposit,
-    COUNTIF(transactions_type = 'FEE') AS transactions_type_purchase,
-    COUNTIF(transactions_type = 'CASHBACK') AS transactions_type_withdrawal,
-    COUNTIF(transactions_type = 'ATM') AS transactions_type_deposit,
-    COUNTIF(transactions_type = 'EXCHANGE') AS transactions_type_purchase,
-    COUNTIF(transactions_type = 'TOPUP') AS transactions_type_withdrawal,
-    COUNTIF(transactions_type = 'TRANSFER') AS transactions_type_deposit,
-    COUNTIF(transactions_type = 'CARD_PAYMENT') AS transactions_type_deposit,
+    COUNTIF(transactions_type = "REFUND") AS transactions_type_purchase,
+    COUNTIF(transactions_type = "TAX") AS transactions_type_withdrawal,
+    COUNTIF(transactions_type = "CARD_REFUND") AS transactions_type_deposit,
+    COUNTIF(transactions_type = "FEE") AS transactions_type_purchase,
+    COUNTIF(transactions_type = "CASHBACK") AS transactions_type_withdrawal,
+    COUNTIF(transactions_type = "ATM") AS transactions_type_deposit,
+    COUNTIF(transactions_type = "EXCHANGE") AS transactions_type_purchase,
+    COUNTIF(transactions_type = "TOPUP") AS transactions_type_withdrawal,
+    COUNTIF(transactions_type = "TRANSFER") AS transactions_type_deposit,
+    COUNTIF(transactions_type = "CARD_PAYMENT") AS transactions_type_deposit,
 
     -- Direction breakdown (e.g., "inbound", "outbound")
-    COUNTIF(direction = 'inbound') AS direction_inbound,
-    COUNTIF(direction = 'outbound') AS direction_outbound
+    COUNTIF(direction = "INBOUND") AS direction_inbound,
+    COUNTIF(direction = "OUTBOUND") AS direction_outbound
 
 FROM cleaned_transactions
 GROUP BY user_id
