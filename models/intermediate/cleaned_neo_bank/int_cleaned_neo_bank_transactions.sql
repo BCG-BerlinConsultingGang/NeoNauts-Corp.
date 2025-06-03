@@ -21,7 +21,7 @@ WITH cleaned_transactions AS (
 )
 
 SELECT
-    CAST(user_id as integer),
+    CAST(user_id as integer) as user_id,
     COUNT(*) AS total_transactions,
     ROUND(SUM(amount_usd),2) AS total_amount_usd,
     ROUND(AVG(amount_usd),2) AS average_amount_per_transaction_usd,
