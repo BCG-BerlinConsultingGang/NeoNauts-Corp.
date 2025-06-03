@@ -50,7 +50,7 @@ with subquery as (
         num_contacts,
         num_referrals,
         num_successful_referrals,
-        date(created_date) as created_date,
+        date(created_date) as sign_up_date,
         cast(attributes_notifications_marketing_push as integer) as notifications_marketing_push,
         cast(attributes_notifications_marketing_email as integer) as notifications_marketing_email
     from {{ ref('stg_raw_neo_bank__users') }}
