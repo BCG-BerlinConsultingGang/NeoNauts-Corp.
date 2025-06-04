@@ -64,9 +64,9 @@ with subquery as (
 
 select
     * except(notifications_marketing_push, notifications_marketing_email, city, plan, num_referrals, num_successful_referrals),
-    plan = "STANDARD" AS is_standard_user,
-    plan = "PREMIUM" AS is_premium_user,
-    plan = "METAL" AS is_metal_user,
-    IF(plan = 'STANDARD', FALSE, TRUE) as paid_subscription
+    COUNTIF(plan = "STANDARD") AS is_standard_user,
+    COOUNTIF(plan = "PREMIUM") AS is_premium_user,
+    COUNTIF(plan = "METAL") AS is_metal_user,
+    IF(plan = 'STANDARD', 0, 1) as paid_subscription
 from subquery
 
