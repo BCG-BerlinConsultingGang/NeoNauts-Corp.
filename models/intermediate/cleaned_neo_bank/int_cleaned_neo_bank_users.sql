@@ -47,7 +47,7 @@ with subquery as (
         birth_year,
         country,
         city,
-        CAST(user_settings_crypto_unlocked as BOOL) as crypto_unlocked,
+        user_settings_crypto_unlocked as crypto_unlocked,
         CASE
             WHEN plan IN ('METAL_FREE', 'PREMIUM_FREE') THEN 'STANDARD'
             WHEN plan = 'PREMIUM_OFFER' THEN 'PREMIUM'
@@ -64,9 +64,9 @@ with subquery as (
 
 select
     * except(notifications_marketing_push, notifications_marketing_email, city, plan, num_referrals, num_successful_referrals),
-    COUNTIF(plan = "STANDARD") AS is_standard_user,
-    COOUNTIF(plan = "PREMIUM") AS is_premium_user,
-    COUNTIF(plan = "METAL") AS is_metal_user,
-    IF(plan = 'STANDARD', 0, 1) as paid_subscription
+    CAST(plan = "STANDARD" AS INT64) AS is_standard_user,
+    CAST(plan = "PREMIUM" AS INT64) AS is_premium_user,
+    CAST(plan = "METAL" AS INT64) AS is_metal_user,
+    CAST(plan IN ("PREMIUM", "METAL") AS INT64) AS paid_subscription
 from subquery
 
