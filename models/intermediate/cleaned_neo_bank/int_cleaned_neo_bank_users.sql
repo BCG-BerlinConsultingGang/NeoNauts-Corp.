@@ -31,9 +31,15 @@ Detailed check of city column:
  
 -> How to treat PLZ? Better to just ignore cities, as this might be unpossible to use as a feature
 
--- CTE:
+from plan, I created 3 boolean columns
+
+num_referrals & num_successful_referrals wurden entfernt, da ausschließlich 0.
 
 */
+
+-- CTE:
+
+
 
 with subquery as (
     select 
@@ -57,6 +63,10 @@ with subquery as (
 )
 
 select
-    * except(notifications_marketing_push, notifications_marketing_email, city),
+    * except(notifications_marketing_push, notifications_marketing_email, city, plan, num_referrals, num_successful_referrals),
+    plan = "STANDARD" AS is_standard_user,
+    plan = "PREMIUM" AS is_premium_user,
+    plan = "METAL" AS is_metal_user,
     IF(plan = 'STANDARD', FALSE, TRUE) as paid_subscription
 from subquery
+
