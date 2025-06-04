@@ -24,7 +24,11 @@ aggregated AS (
     SELECT
         user_id,
         COUNT(*) AS total_transactions,
-        ROUND(SUM(amount_usd), 2) AS total_amount_usd,
+        ROUND(SUM(CASE 
+                    WHEN transactions_state IN ("COMPLETED", "PENDING") 
+                    THEN amount_usd
+                  ELSE 0 
+                  END),2) AS total_amount_usd,
         ROUND(AVG(amount_usd), 2) AS average_amount_per_transaction_usd,
         MIN(transaction_date) AS first_transaction_date,
         MAX(transaction_date) AS last_transaction_date,
