@@ -63,14 +63,11 @@ aggregated AS (
 
 SELECT
     *,
-    ROUND(SAFE_DIVIDE(
-        total_transactions,
-        time_between_transactions + 1
-    ),2) AS avg_transactions_per_day,
+    ROUND(SAFE_DIVIDE(total_transactions, time_between_transactions + 1), 2) AS avg_transactions_per_day,
 
     -- average in and outbound transactions
 
-    ROUND(SAFE_DIVIDE(direction_inbound, time_between_transactions), 2) AS avg_inbound,
-    ROUND(SAFE_DIVIDE(direction_outbound, time_between_transactions), 2) AS avg_outbound
+    ROUND(SAFE_DIVIDE(direction_inbound, time_between_transactions + 1), 2) AS avg_inbound,
+    ROUND(SAFE_DIVIDE(direction_outbound, time_between_transactions + 1), 2) AS avg_outbound
 
 FROM aggregated
