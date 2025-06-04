@@ -18,18 +18,15 @@ WITH cleaned_transactions AS (
         CAST(REPLACE(user_id, "user_", "") AS integer) AS user_id,
         DATE(created_date) AS transaction_date
     FROM {{ ref('stg_raw_neo_bank__transactions') }}
+    WHERE transactions_state IN ("COMPLETED","PENDING")
 ),
 
 aggregated AS (
     SELECT
         user_id,
         COUNT(*) AS total_transactions,
-        ROUND(SUM(CASE 
-                    WHEN transactions_state IN ("COMPLETED", "PENDING") 
-                    THEN amount_usd
-                  ELSE 0 
-                  END),2) AS total_amount_usd,
-        ROUND(AVG(amount_usd), 2) AS average_amount_per_transaction_usd,
+        ROUND(SUM(amount_usd), 3) AS total_amount_usd,
+        ROUND(AVG(amount_usd), 3) AS average_amount_per_transaction_usd,
         MIN(transaction_date) AS first_transaction_date,
         MAX(transaction_date) AS last_transaction_date,
         DATE_DIFF(MAX(transaction_date), MIN(transaction_date), DAY) AS time_between_transactions,
@@ -63,11 +60,11 @@ aggregated AS (
 
 SELECT
     *,
-    ROUND(SAFE_DIVIDE(total_transactions, time_between_transactions + 1), 2) AS avg_transactions_per_day,
+    ROUND(SAFE_DIVIDE(total_transactions, time_between_transactions + 1), 3) AS avg_transactions_per_day,
 
     -- average in and outbound transactions
 
-    ROUND(SAFE_DIVIDE(direction_inbound, time_between_transactions + 1), 2) AS avg_inbound,
-    ROUND(SAFE_DIVIDE(direction_outbound, time_between_transactions + 1), 2) AS avg_outbound
+    ROUND(SAFE_DIVIDE(direction_inbound, time_between_transactions + 1), 3) AS avg_inbound,
+    ROUND(SAFE_DIVIDE(direction_outbound, time_between_transactions + 1), 3) AS avg_outbound
 
 FROM aggregated
