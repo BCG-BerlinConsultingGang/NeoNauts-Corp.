@@ -19,3 +19,4 @@ select
     from subquery as s 
         left join {{ ref('int_cleaned_neo_bank_transactions') }} as t 
         USING(user_id)
+        
