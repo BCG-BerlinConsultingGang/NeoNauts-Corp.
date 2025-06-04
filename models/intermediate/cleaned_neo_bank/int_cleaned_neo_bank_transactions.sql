@@ -52,7 +52,15 @@ aggregated AS (
 
         -- Direction breakdown
         COUNTIF(direction = "INBOUND") AS direction_inbound,
-        COUNTIF(direction = "OUTBOUND") AS direction_outbound
+        COUNTIF(direction = "OUTBOUND") AS direction_outbound,
+
+        -- Days since last activity:
+        DATE_DIFF(DATE('2019-05-16'), MAX(transaction_date), DAY) AS days_since_activity,
+
+        --average in and outbound transactions
+        ROUND(SAFE_DIVIDE(COUNTIF(direction = "INBOUND"), DATE_DIFF(MAX(transaction_date), MIN(transaction_date), DAY)), 2) AS avg_inbound,
+        ROUND(SAFE_DIVIDE(COUNTIF(direction = "OUTBOUND"), DATE_DIFF(MAX(transaction_date), MIN(transaction_date), DAY)), 2) AS avg_outbound
+
 
     FROM cleaned_transactions
     GROUP BY user_id
