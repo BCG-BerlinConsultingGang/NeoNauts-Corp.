@@ -43,10 +43,6 @@ aggregated AS (
         COUNTIF(transactions_type = "TRANSFER") AS transactions_type_transfer,
         COUNTIF(transactions_type = "CARD_PAYMENT") AS transactions_type_card_payment,
 
-        -- Transactions State breakdown
-        COUNTIF(transactions_state IN ("COMPLETED", "PENDING")) AS transactions_state_success,
-        COUNTIF(transactions_state IN ("DECLINED", "FAILED", "CANCELLED", "REVERTED")) AS transactions_state_failed,
-
         -- Direction breakdown
         COUNTIF(direction = "INBOUND") AS direction_inbound,
         COUNTIF(direction = "OUTBOUND") AS direction_outbound,
