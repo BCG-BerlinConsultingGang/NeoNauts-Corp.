@@ -52,7 +52,7 @@ aggregated AS (
         COUNTIF(direction = "OUTBOUND") AS direction_outbound,
 
         -- Days since last activity:
-        DATE_DIFF(DATE('2019-05-16'), MAX(transaction_date), DAY) AS days_since_activity,
+        DATE_DIFF(DATE('2019-05-16'), MAX(transaction_date), DAY) AS days_since_last_transaction,
 
     FROM cleaned_transactions
     GROUP BY user_id
