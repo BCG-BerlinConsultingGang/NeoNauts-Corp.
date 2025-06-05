@@ -1,3 +1,5 @@
+-- We decided to use INNER JOIN, instead of LEFT JOIN. We will lose 900 users, from which we had no transaction data at all.
+
 -- JOIN of users and notifications table inside subquery
 
 with subquery as(
@@ -17,6 +19,6 @@ select
     t.* except(user_id),
     DATE_DIFF(t.last_transaction_date, s.sign_up_date, DAY) as active_timeframe
     from subquery as s 
-        left join {{ ref('int_cleaned_neo_bank_transactions') }} as t 
+        INNER join {{ ref('int_cleaned_neo_bank_transactions') }} as t 
         USING(user_id)
         
