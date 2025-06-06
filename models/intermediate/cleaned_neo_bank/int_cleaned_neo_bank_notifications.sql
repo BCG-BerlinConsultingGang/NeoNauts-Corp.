@@ -55,7 +55,7 @@ ORDER BY nb_notfications DESC
 
 WITH base AS (
     SELECT
-        CAST(REGEXP_EXTRACT(user_id, r'user_(\d+)') AS INT64) AS user_id,
+        CAST(REGEXP_EXTRACT(user_id, r'user_(\d+)') AS integer) AS user_id,
         reason,
         channel,
         created_date
