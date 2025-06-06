@@ -67,6 +67,7 @@ select
     CAST(plan = "STANDARD" AS INT64) AS is_standard_user,
     CAST(plan = "PREMIUM" AS INT64) AS is_premium_user,
     CAST(plan = "METAL" AS INT64) AS is_metal_user,
-    CAST(plan IN ("PREMIUM", "METAL") AS INT64) AS paid_subscription
+    CAST(plan IN ("PREMIUM", "METAL") AS INT64) AS paid_subscription,
+    EXTRACT(YEAR FROM sign_up_date) - birth_year AS age
 from subquery
 
