@@ -64,10 +64,10 @@ with subquery as (
 
 select
     * except(notifications_marketing_push, notifications_marketing_email, city, plan, num_referrals, num_successful_referrals),
+    EXTRACT(YEAR FROM sign_up_date) - birth_year AS age,
     CAST(plan = "STANDARD" AS INT64) AS is_standard_user,
     CAST(plan = "PREMIUM" AS INT64) AS is_premium_user,
     CAST(plan = "METAL" AS INT64) AS is_metal_user,
     CAST(plan IN ("PREMIUM", "METAL") AS INT64) AS paid_subscription,
-    EXTRACT(YEAR FROM sign_up_date) - birth_year AS age
 from subquery
 
