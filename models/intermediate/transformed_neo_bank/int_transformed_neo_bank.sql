@@ -10,10 +10,10 @@ with notifications_subquery as(
         n.last_notification,
         n.notification_duration_days,
         ifnull(n.nb_notifications, 0) as nb_notifications,
-        n.nb_sms
+        n.nb_sms,
         n.nb_push,
         n.nb_email,
-        n.most_frequent_reason,
+        n.most_frequent_reason
         from {{ ref('int_cleaned_neo_bank_users') }} as u
             left join {{ ref('int_cleaned_neo_bank_notifications') }} as n
             USING(user_id)
