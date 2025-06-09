@@ -18,8 +18,8 @@ devices_subquery as(
 
     select p.*,
     d.device_brand,
-    d.apple_user,
-    d.android_user
+    ifnull(d.apple_user, 0) as apple_user,
+    ifnull(d.android_user, 0) as android_user
     from notifications_subquery as p
         left join {{ ref('int_cleaned_neo_bank_devices') }} as d
         USING(user_id)
@@ -36,4 +36,5 @@ select
         INNER join {{ ref('int_cleaned_neo_bank_transactions') }} as t 
         USING(user_id)
         order by t.days_since_last_transaction asc
+
         
