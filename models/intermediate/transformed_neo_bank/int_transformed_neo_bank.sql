@@ -17,7 +17,9 @@ with notifications_subquery as(
 devices_subquery as(
 
     select p.*,
-    d.device_brand
+    d.device_brand,
+    d.apple_user,
+    d.android_user
     from notifications_subquery as p
         left join {{ ref('int_cleaned_neo_bank_devices') }} as d
         USING(user_id)
