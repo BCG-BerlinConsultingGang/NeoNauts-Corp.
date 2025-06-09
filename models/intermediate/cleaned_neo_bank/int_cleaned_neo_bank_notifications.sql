@@ -91,12 +91,12 @@ SELECT
     DATE_DIFF(DATE(MAX(b.created_date)), DATE(MIN(b.created_date)), DAY) AS notification_duration_days,
 
     -- Count of all SENT notifications
-    COUNT(*) AS nb_notifications,
+    ifnull(COUNT(*), 0) AS nb_notifications,
 
     -- Channel-specific counts
-    COUNTIF(b.channel = 'SMS') AS nb_sms,
-    COUNTIF(b.channel = 'PUSH') AS nb_push,
-    COUNTIF(b.channel = 'EMAIL') AS nb_email,
+    ifnull(COUNTIF(b.channel = 'SMS'), 0) AS nb_sms,
+    ifnull(COUNTIF(b.channel = 'PUSH'), 0) AS nb_push,
+    ifnull(COUNTIF(b.channel = 'EMAIL'), 0) AS nb_email,
 
     -- Most frequent reason
     mfr.most_frequent_reason
