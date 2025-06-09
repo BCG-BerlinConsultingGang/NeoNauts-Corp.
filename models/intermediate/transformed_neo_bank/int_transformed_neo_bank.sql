@@ -6,7 +6,14 @@ with notifications_subquery as(
 
     select 
         u.*,
-        n.* except(user_id),
+        n.first_notification,
+        n.last_notification,
+        n.notification_duration_days,
+        ifnull(n.nb_notifications, 0)
+        n.nb_sms
+        n.nb_push,
+        nb_email,
+        n.most_frequent_reason,
         from {{ ref('int_cleaned_neo_bank_users') }} as u
             left join {{ ref('int_cleaned_neo_bank_notifications') }} as n
             USING(user_id)
