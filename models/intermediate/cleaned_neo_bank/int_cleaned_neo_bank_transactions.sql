@@ -48,7 +48,7 @@ aggregated AS (
         COUNTIF(direction = "OUTBOUND") AS direction_outbound,
 
         -- Inbound/Outbound ratio
-        ROUND(IFNULL(SAFE_DIVIDE(COUNTIF(direction = "INBOUND"), COUNTIF(direction = "OUTBOUND")), 0.0), 3) AS direction_ratio,
+        ROUND(IFNULL(SAFE_DIVIDE(COUNTIF(direction = "OUTBOUND"), COUNTIF(direction = "INBOUND")), 0.0), 3) AS direction_ratio,
         -- Days since last activity:
         DATE_DIFF(DATE('2019-05-16'), MAX(transaction_date), DAY) AS days_since_last_transaction,
 
