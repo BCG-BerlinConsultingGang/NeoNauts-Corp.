@@ -55,7 +55,7 @@ This project shows how engagement can be tracked, quantified, and used to:
   2. Visualize behavioral shifts over time
   3. Build targeted user strategies based on data
 
--> This repository contains two Python files:
+-> This Folder contains two Python files:
 
 Python_Code_for_Neo_Bank.ipynb
 → Full Jupyter Notebook with explanations, visualizations, and step-by-step documentation
