@@ -50,7 +50,9 @@ Google Colab (development environment)
 Why This Matters
 
 For digital platforms like Neo Banks, customer retention is critical.
+
 This project shows how engagement can be tracked, quantified, and used to:
+
 Detect churn risks before they happen
 Visualize behavioral shifts over time
 Build targeted user strategies based on data
