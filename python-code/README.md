@@ -40,27 +40,22 @@ Input: weekly user features
 Output: probability that a user will churn in the near future
 Predictions are saved in a churn forecast table for further use
 
-Technologies Used
+-> Technologies Used
 
 Python (pandas, numpy, scikit-learn, matplotlib)
 Google BigQuery (data sourcing)
 Google Colab (development environment)
 
-
-Why This Matters
+-> Why This Matters
 
 For digital platforms like Neo Banks, customer retention is critical.
-
 This project shows how engagement can be tracked, quantified, and used to:
 
-Detect churn risks before they happen
-Visualize behavioral shifts over time
-Build targeted user strategies based on data
+  1. Detect churn risks before they happen
+  2. Visualize behavioral shifts over time
+  3. Build targeted user strategies based on data
 
-File Structure
-
-This repository contains two Python files:
-
+-> This repository contains two Python files:
 
 Python_Code_for_Neo_Bank.ipynb
 → Full Jupyter Notebook with explanations, visualizations, and step-by-step documentation
