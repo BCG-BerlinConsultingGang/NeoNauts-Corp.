@@ -35,4 +35,3 @@ It consolidates cleaned, feature-enriched user data and stores the result in a r
 - Churn label
 - Engagement features
 - Cluster assignment
-- Scaled/normalized feature columns
