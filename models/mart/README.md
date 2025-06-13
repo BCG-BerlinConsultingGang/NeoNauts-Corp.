@@ -28,7 +28,7 @@ It consolidates cleaned, feature-enriched user data and stores the result in a r
 -> Technologies Used
 - Python 3.11 (Colab)
 - BigQuery (via google.cloud.bigquery)
-- pandas, numpy, sklearn, matplotlib
+- pandas, numpy, sklearn
 
 -> Output Table Contains
 - user_id
