@@ -5,10 +5,10 @@ It consolidates cleaned, feature-enriched user data and stores the result in a r
 
 -> Purpose
 1. Prepare a production-ready mart table containing:
-  Churn labels (based on 30+ days inactivity)
-  Scaled behavioral features
-  Clustering results
-  User segmentation info
+  - Churn labels (based on 30+ days inactivity)
+  - Scaled behavioral features
+  - Clustering results
+  - User segmentation info
 2. Store this result in BigQuery for BI tools (e.g. Looker Studio) or machine learning models.
 
 -> Data Source 
@@ -18,9 +18,9 @@ It consolidates cleaned, feature-enriched user data and stores the result in a r
 -> Main Steps
 1. Import transformed user-level data
 2. Feature engineering:
-  Lifetime engagement metrics
-  Transaction frequency and value
-  Notification history
+  - Lifetime engagement metrics
+  - Transaction frequency and value
+  - Notification history
 3. Cluster assignment via KMeans
 4. Churn labeling and thresholding
 5. Export final DataFrame to BigQuery mart table
