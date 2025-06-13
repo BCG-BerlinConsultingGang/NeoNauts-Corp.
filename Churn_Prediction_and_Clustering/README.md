@@ -1,63 +1,35 @@
-Customer Engagement & Churn Prediction
+Churn and Clustering Method – NeoBank Analytics
 
-This repository contains a Python-based data analytics project that explores how customers engage with a Neo Banking app — and predicts which users are likely to stop using the service (so-called churn).
-The goal of the project is to better understand user behavior, identify early risk patterns, and support decision-making with data-driven insights to reduce customer-churn.
+This notebook provides a full pipeline to analyze user churn behavior and cluster user profiles based on behavioral patterns. It is built to run in Google Colab using data extracted from BigQuery.
 
-Project Overview
+-> Contents
 
-The notebook includes several key components:
+- Data Import
+Connects to BigQuery and loads pre-transformed user-level transaction data from:
+neonauts.dbt_azoellner.int_transformed_neo_bank
+- Churn Definition
+Churn is defined as no user activity within a 30-day window. Users are labeled accordingly.
+- Clustering Analysis
+Behavioral features (e.g. transaction frequency, average amount, engagement scores) are extracted and normalized to feed into clustering algorithms (e.g. KMeans).
+- Churn Labeling and Interpretation
+Each cluster is analyzed in terms of its churn share and behavioral profile to identify high-risk user segments.
 
-1. Data Cleaning & Preparation
-Import of three core datasets:
-df_transactions: all user transactions (amount, date, direction, …)
-df_notifications: communication history (channel, status, timestamp, …)
-df_users: static user info (age, country, device)
-Weekly aggregation and preprocessing of behavioral metrics
+-> Key Techniques
+pandas, numpy, sklearn for data wrangling and clustering
+google.cloud.bigquery for cloud-based data access
+matplotlib, seaborn for result visualization
+StandardScaler and KMeans from sklearn
 
-2. Customer Lifetime Score (LES)
-A score is calculated for each user to capture engagement
-Combines various signals:
-Transaction frequency and volume
-Interaction with notifications
-Subscription type (standard, premium, metal)
-All features are normalized and weighted to form a single score
+-> Output
+Cleaned dataset with churn labels
+User clusters based on behavioral patterns
+Visual interpretation of churn risk across clusters
+Reusable pipeline for churn prediction and segmentation
 
-3. Visualization
-Trends over time (e.g., average LES by week)
-User-level CES development (incl. drop detection)
-Enables pattern recognition across different user segments
-
-4. Churn Definition & Labeling
-
-Users are marked as churned if no transaction occurs for 30+ days
-A rolling-window approach is used to generate churn labels over time
-Weekly user data is enriched with features and labeled accordingly
-
-5. Machine Learning Integration
-
-A classification model (e.g., logistic regression) is trained
-Input: weekly user features
-Output: probability that a user will churn in the near future
-Predictions are saved in a churn forecast table for further use
-
--> Technologies Used
-
-Python (pandas, numpy, scikit-learn, matplotlib)
-Google BigQuery (data sourcing)
-Google Colab (development environment)
-
--> Why This Matters
-
-For digital platforms like Neo Banks, customer retention is critical.
-This project shows how engagement can be tracked, quantified, and used to:
-
-  1. Detect churn risks before they happen
-  2. Visualize behavioral shifts over time
-  3. Build targeted user strategies based on data
-
--> This directory contains two Python files:
-
-Python_Code_for_Neo_Bank.ipynb
-→ Full Jupyter Notebook with explanations, visualizations, and step-by-step documentation
-Python_Code_for_Neo_Bank.py
-→ A clean version of the code for direct execution or integration into other workflows
+-> Requirements
+Google Cloud project access (BigQuery)
+Python environment (Colab or Jupyter)
+Python packages:
+google-cloud-bigquery
+scikit-learn
+matplotlib, seaborn
