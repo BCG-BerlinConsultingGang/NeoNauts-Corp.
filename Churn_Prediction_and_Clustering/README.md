@@ -1,6 +1,7 @@
 Churn and Clustering Method – NeoBank Analytics
 
-This notebook provides a full pipeline to analyze user churn behavior and cluster user profiles based on behavioral patterns. It is built to run in Google Colab using data extracted from BigQuery.
+This notebook provides a full pipeline to analyze user churn behavior and cluster user profiles based on behavioral patterns. 
+xIt is built to run in Google Colab using data extracted from BigQuery.
 
 -> Contents
 
@@ -14,22 +15,22 @@ Behavioral features (e.g. transaction frequency, average amount, engagement scor
 - Churn Labeling and Interpretation
 Each cluster is analyzed in terms of its churn share and behavioral profile to identify high-risk user segments.
 
--> Key Techniques
-pandas, numpy, sklearn for data wrangling and clustering
-google.cloud.bigquery for cloud-based data access
-matplotlib, seaborn for result visualization
-StandardScaler and KMeans from sklearn
+-> Data Stack
+- pandas, numpy, sklearn for data wrangling and clustering
+- google.cloud.bigquery for cloud-based data access
+- matplotlib, seaborn for result visualization
+- StandardScaler and KMeans from sklearn
 
 -> Output
-Cleaned dataset with churn labels
-User clusters based on behavioral patterns
-Visual interpretation of churn risk across clusters
-Reusable pipeline for churn prediction and segmentation
+- Cleaned dataset with churn labels
+- User clusters based on behavioral patterns
+- Visual interpretation of churn risk across clusters
+- Reusable pipeline for churn prediction and segmentation
 
 -> Requirements
-Google Cloud project access (BigQuery)
-Python environment (Colab or Jupyter)
-Python packages:
-google-cloud-bigquery
-scikit-learn
-matplotlib, seaborn
+- Google Cloud project access (BigQuery)
+- Python environment (Colab or Jupyter)
+- Python packages:
+  - google-cloud-bigquery
+  - scikit-learn
+  - matplotlib, seaborn
