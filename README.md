@@ -34,6 +34,9 @@ The final result includes a Logit Prediction Model (Machine Learning Model using
 - **Business Intelligence & Visualization:** Google Looker Studio
 - **Scripting/Modelling:** Google Colab (Python)
 
+## Links
+- Google Looker Studio: https://lookerstudio.google.com/reporting/ccb9c711-c443-4407-a669-6ab1fa7c7b71
+
 ## Data Sources
 
 ### 1. devices
