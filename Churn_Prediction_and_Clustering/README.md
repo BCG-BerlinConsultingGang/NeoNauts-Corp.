@@ -1,7 +1,7 @@
 Churn and Clustering Method – NeoBank Analytics
 
 This notebook provides a full pipeline to analyze user churn behavior and cluster user profiles based on behavioral patterns. 
-xIt is built to run in Google Colab using data extracted from BigQuery.
+It is built to run in Google Colab using data extracted from BigQuery.
 
 -> Contents
 
