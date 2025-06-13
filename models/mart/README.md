@@ -11,7 +11,7 @@ It consolidates cleaned, feature-enriched user data and stores the result in a r
   User segmentation info
 2. Store this result in BigQuery for BI tools (e.g. Looker Studio) or machine learning models.
 
--> Data Source
+-> Data Source 
 Input: neonauts.dbt_azoellner.int_transformed_neo_bank
 
 Output (mart table): neonauts.dbt_maxstuenzner.mart_user_churn_clusters
