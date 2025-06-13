@@ -24,7 +24,7 @@ The final deliverables consist of:
 3. Selection of tech stack (SQL, dbt, BigQuery, Google Looker Studio, Python, Github)
 4. Data Cleaning (SQL)
 5. Data Enrichment & Feature Engineering (SQL & Python)
-6. Creation of a **user engagement scoring system** and **user segments** based on it
+6. Creation of a user engagement scoring system and user segments based on it
 7. Identifying retention levers and introducing recommendations to retain users
 9. Documentation in Github & dbt
 
