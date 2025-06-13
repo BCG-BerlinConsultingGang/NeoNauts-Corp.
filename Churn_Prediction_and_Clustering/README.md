@@ -14,8 +14,8 @@ df_notifications: communication history (channel, status, timestamp, …)
 df_users: static user info (age, country, device)
 Weekly aggregation and preprocessing of behavioral metrics
 
-2. Customer Engagement Score (CES)
-A weekly score is calculated for each user to capture engagement
+2. Customer Lifetime Score (LES)
+A score is calculated for each user to capture engagement
 Combines various signals:
 Transaction frequency and volume
 Interaction with notifications
@@ -23,7 +23,7 @@ Subscription type (standard, premium, metal)
 All features are normalized and weighted to form a single score
 
 3. Visualization
-Trends over time (e.g., average CES by week)
+Trends over time (e.g., average LES by week)
 User-level CES development (incl. drop detection)
 Enables pattern recognition across different user segments
 
