@@ -8,6 +8,25 @@ It is about exploring the realms of a globally renowned neo-bank, pioneering in 
 
 The goal was to unveil insights, provide shrewd business recommendations to abate churn rates, and illuminate pathways to heightened user involvement.
 
+As a data team, our role in this project is to:
+
+- Explore user behavior and introduce a definition of churn
+- Uncover patterns that lead to churn
+- Act on this patters and give recommendations for targeted intervention to mitigate churn
+
+The final result includes a Logit Prediction Model (Machine Learning Model using Logistic Regression) written in Python and an interactive report in Google Looker Studio.
+
+## High-level work packages
+
+1. Initial familiarization with the dataset
+2. Ideation & set up of project in Notion
+3. Selection of tech stack (SQL, dbt, BigQuery, Google Looker Studio, Python, Github)
+4. Data Cleaning (SQL)
+5. Data Enrichment & Feature Engineering (SQL & Python)
+6. Creation of a **user engagement scoring system** and **user segments** based on it
+7. Identifying **retention levers** and introducing recommendations to retain users
+9. Documentation in Github & dbt
+
 ## Data Sources
 
 ### 1. devices
@@ -57,10 +76,9 @@ A table with transactions that a user made
   - DECLINED/FAILED - the transaction was declined for some reason, usually pertains to insufficient balance
   - REVERTED - the associated transaction was completed first but was then rolled back later in time potentially due      to customer reaching out to neo bank
 - ea_cardholderpresence: string indicating if the card holder was present when the transaction
-- ea_merchant_mcc: float corresponding to the Merchant Category Code (MCC)
+- ea_merchant_mcc: float corresponding to the Merchant Category Code (MCC) 
 - ea_merchant_city: string corresponding to the merchant’s city
 - ea_merchant_country: string corresponding to the merchant’s country
 - direction: string indicating the direction of the transaction
 - user_id: string uniquely identifying the user
 - created_date: datetime corresponding to the transaction’s created date
-
