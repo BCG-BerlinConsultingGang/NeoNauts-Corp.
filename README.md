@@ -2,19 +2,20 @@
 
 ## Context
 
-This project was worked on during the Le Wagon Bootcamp.
+This project was developed during the Le Wagon Bootcamp and centers on analyzing user behavior within a globally recognized neo-bank that aims to eliminate hidden fees in cross-currency transactions. The bank is particularly interested in understanding the factors driving user retention and engagement.
 
-It is about exploring the realms of a globally renowned neo-bank, pioneering in eradicating hidden bank charges for cross-currency transactions. Intriguingly, the neo-bank seeks to fathom the dynamics of user retention and gauge user engagement based on their activities.
+Our primary objective was to extract actionable insights, propose strategies to reduce churn, and identify opportunities to boost user involvement.
 
-The goal was to unveil insights, provide shrewd business recommendations to abate churn rates, and illuminate pathways to heightened user involvement.
-
-As a data team, our role in this project is to:
+As a team, our role in this project was to:
 
 - Explore user behavior and introduce a definition of churn
 - Uncover patterns that lead to churn
 - Act on this patters and give recommendations for targeted intervention to mitigate churn
 
-The final result includes a Logit Prediction Model (Machine Learning Model using Logistic Regression) written in Python and an interactive report in Google Looker Studio.
+The final deliverables consist of:
+
+- A Logistic Regression Model (Logit Model) implemented in Python for churn prediction
+- An interactive data report built with Google Looker Studio
 
 ## High-level Work Packages
 
