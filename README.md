@@ -24,7 +24,7 @@ The final result includes a Logit Prediction Model (Machine Learning Model using
 4. Data Cleaning (SQL)
 5. Data Enrichment & Feature Engineering (SQL & Python)
 6. Creation of a **user engagement scoring system** and **user segments** based on it
-7. Identifying **retention levers** and introducing recommendations to retain users
+7. Identifying retention levers and introducing recommendations to retain users
 9. Documentation in Github & dbt
 
 ## Data Sources
