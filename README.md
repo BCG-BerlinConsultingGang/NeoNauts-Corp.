@@ -16,7 +16,7 @@ As a data team, our role in this project is to:
 
 The final result includes a Logit Prediction Model (Machine Learning Model using Logistic Regression) written in Python and an interactive report in Google Looker Studio.
 
-## High-level work packages
+## High-level Work Packages
 
 1. Initial familiarization with the dataset
 2. Ideation & set up of project in Notion
@@ -26,6 +26,13 @@ The final result includes a Logit Prediction Model (Machine Learning Model using
 6. Creation of a **user engagement scoring system** and **user segments** based on it
 7. Identifying retention levers and introducing recommendations to retain users
 9. Documentation in Github & dbt
+
+## Tech Stack
+- **Data Warehouse:** BigQuery
+- **Data Platform (EDA, Cleaning, Transformation, IDE):** dbt Cloud
+- **Version Control:** Github
+- **Business Intelligence & Visualization:** Google Looker Studio
+- **Scripting/Modelling:** Google Colab (Python)
 
 ## Data Sources
 
