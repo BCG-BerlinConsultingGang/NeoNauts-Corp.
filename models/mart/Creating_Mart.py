@@ -226,5 +226,12 @@ def model(dbt, session):
     job = client.load_table_from_dataframe(mart_user_LES_Neo_Bank, table_id, job_config=job_config)
     
     job.result()
+
+    mart_user_LES_Neo_Bank = mart_user_LES_Neo_Bank.merge(
+            df_churn_prediction,
+            on="user_id",
+            how="left"
+        )
     
-    print("Table created successfully:", table_id)
+        return mart_user_LES_Neo_Bank
+
