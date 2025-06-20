@@ -5,8 +5,10 @@ def model(dbt, session):
     from sklearn.model_selection import train_test_split
     from sklearn.cluster import KMeans
 
+    # Load ref table from dbt
     df = dbt.ref("int_transformed_neo_bank").to_pandas()
 
+    # Convert date columns
     date_columns = [
         "sign_up_date", "first_notification", "last_notification",
         "first_transaction_date", "last_transaction_date"
@@ -14,7 +16,7 @@ def model(dbt, session):
     for col in date_columns:
         df[col] = pd.to_datetime(df[col], errors='coerce')
 
-    # Model Training
+    # Define features and target
     X = df[[
         "avg_transactions_per_day", "crypto_unlocked", "is_standard_user",
         "is_premium_user", "is_metal_user", "average_amount_per_transaction_usd",
@@ -23,14 +25,16 @@ def model(dbt, session):
     ]]
     y = df["active_user"]
 
+    # Scale and train/test split
     ML_scaler = StandardScaler().set_output(transform="pandas")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     X_train_scaled = ML_scaler.fit_transform(X_train)
 
+    # Train logistic regression
     log_reg_model = LogisticRegression()
     log_reg_model.fit(X_train_scaled, y_train)
 
-    # Engagement Score
+    # Engagement scoring
     engagement_features = [
         "avg_transactions_per_day", "crypto_unlocked", "is_standard_user",
         "is_premium_user", "is_metal_user", "average_amount_per_transaction_usd",
@@ -42,6 +46,7 @@ def model(dbt, session):
         "average_amount_per_transaction_usd": 3, "crypto_unlocked": 2
     }
 
+    # Scale features for engagement score
     scaler = MinMaxScaler()
     df_scaled = pd.DataFrame(scaler.fit_transform(df[engagement_features]), columns=engagement_features)
     for feature in weights:
@@ -49,7 +54,7 @@ def model(dbt, session):
     df_scaled["LES"] = df_scaled[list(weights)].sum(axis=1)
     df_scaled["user_id"] = df["user_id"]
 
-    # Clustering
+    # Clustering by engagement score
     kmeans = KMeans(n_clusters=3, random_state=42)
     df_scaled["segment_kmeans"] = kmeans.fit_predict(df_scaled[["LES"]])
     cluster_order = df_scaled.groupby("segment_kmeans")["LES"].mean().sort_values().index
@@ -60,10 +65,12 @@ def model(dbt, session):
     }
     df_scaled["segment_label"] = df_scaled["segment_kmeans"].map(segment_labels)
 
+    # Merge back to original data
     mart_user_LES_Neo_Bank = df_scaled[["user_id", "LES", "segment_label"]].merge(
         df, on="user_id", how="left"
     )
 
+    # Predict churn probability
     X_full_scaled = ML_scaler.transform(X)
     churn_probability = log_reg_model.predict_proba(X_full_scaled)[:, 0]
     df_churn = pd.DataFrame({
@@ -71,5 +78,6 @@ def model(dbt, session):
         "churn_probability": churn_probability
     })
 
+    # Final merged DataFrame
     final_df = mart_user_LES_Neo_Bank.merge(df_churn, on="user_id", how="left")
     return final_df
