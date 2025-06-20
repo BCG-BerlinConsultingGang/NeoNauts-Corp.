@@ -233,5 +233,5 @@ def model(dbt, session):
             how="left"
         )
     
-        return mart_user_LES_Neo_Bank
+    return mart_user_LES_Neo_Bank
 
