@@ -1,3 +1,6 @@
+from dbt.adapters.python import model
+
+@model()
 def model(dbt, session):
     import pandas as pd
     from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -21,7 +24,7 @@ def model(dbt, session):
 
     # Machine Learning Model
     ML_scaler = StandardScaler().set_output(transform="pandas")
-    model = LogisticRegression()
+    model_lr = LogisticRegression()
 
     X = df[[
         "avg_transactions_per_day", "crypto_unlocked", "is_standard_user",
@@ -32,7 +35,7 @@ def model(dbt, session):
     y = df["active_user"]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     X_train_scaled = ML_scaler.fit_transform(X_train)
-    model.fit(X_train_scaled, y_train)
+    model_lr.fit(X_train_scaled, y_train)
 
     # Engagement Score Calculation
     engagement_features = [
@@ -55,9 +58,11 @@ def model(dbt, session):
     kmeans = KMeans(n_clusters=3, random_state=42)
     df_scaled['segment_kmeans'] = kmeans.fit_predict(X_cluster)
     cluster_order = df_scaled.groupby('segment_kmeans')['LES'].mean().sort_values().index
-    segment_labels = {cluster_order[0]: 'Low Engagement',
-                      cluster_order[1]: 'Medium Engagement',
-                      cluster_order[2]: 'High Engagement'}
+    segment_labels = {
+        cluster_order[0]: 'Low Engagement',
+        cluster_order[1]: 'Medium Engagement',
+        cluster_order[2]: 'High Engagement'
+    }
     df_scaled['segment_label'] = df_scaled['segment_kmeans'].map(segment_labels)
 
     # Merge with original data
@@ -71,7 +76,7 @@ def model(dbt, session):
         "nb_notifications", "direction_ratio"
     ]]
     X_full_data_scaled = ML_scaler.transform(X_full_data)
-    probabilities = model.predict_proba(X_full_data_scaled)
+    probabilities = model_lr.predict_proba(X_full_data_scaled)
     churn_probability = probabilities[:, 0]
 
     df_churn_prediction = pd.DataFrame({
