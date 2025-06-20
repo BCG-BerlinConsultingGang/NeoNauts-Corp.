@@ -1,3 +1,6 @@
+from dbt.adapters.python import model
+
+@model()
 def model(dbt, session):
     import pandas as pd
     from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -5,7 +8,7 @@ def model(dbt, session):
     from sklearn.model_selection import train_test_split
     from sklearn.cluster import KMeans
 
-    # Load ref table from dbt
+    # Load input data
     df = dbt.ref("int_transformed_neo_bank").to_pandas()
 
     # Convert date columns
@@ -14,7 +17,7 @@ def model(dbt, session):
         "first_transaction_date", "last_transaction_date"
     ]
     for col in date_columns:
-        df[col] = pd.to_datetime(df[col], errors='coerce')
+        df[col] = pd.to_datetime(df[col], errors="coerce")
 
     # Define features and target
     X = df[[
@@ -25,16 +28,16 @@ def model(dbt, session):
     ]]
     y = df["active_user"]
 
-    # Scale and train/test split
-    ML_scaler = StandardScaler().set_output(transform="pandas")
+    # Train-test split & scale
+    scaler = StandardScaler().set_output(transform="pandas")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    X_train_scaled = ML_scaler.fit_transform(X_train)
+    X_train_scaled = scaler.fit_transform(X_train)
 
-    # Train logistic regression
-    log_reg_model = LogisticRegression()
-    log_reg_model.fit(X_train_scaled, y_train)
+    # Logistic regression
+    clf = LogisticRegression()
+    clf.fit(X_train_scaled, y_train)
 
-    # Engagement scoring
+    # Engagement score
     engagement_features = [
         "avg_transactions_per_day", "crypto_unlocked", "is_standard_user",
         "is_premium_user", "is_metal_user", "average_amount_per_transaction_usd",
@@ -46,38 +49,29 @@ def model(dbt, session):
         "average_amount_per_transaction_usd": 3, "crypto_unlocked": 2
     }
 
-    # Scale features for engagement score
-    scaler = MinMaxScaler()
-    df_scaled = pd.DataFrame(scaler.fit_transform(df[engagement_features]), columns=engagement_features)
+    minmax_scaler = MinMaxScaler()
+    df_eng_scaled = pd.DataFrame(minmax_scaler.fit_transform(df[engagement_features]), columns=engagement_features)
     for feature in weights:
-        df_scaled[feature] = df_scaled[feature] * weights[feature]
-    df_scaled["LES"] = df_scaled[list(weights)].sum(axis=1)
-    df_scaled["user_id"] = df["user_id"]
+        df_eng_scaled[feature] *= weights[feature]
+    df_eng_scaled["LES"] = df_eng_scaled[list(weights)].sum(axis=1)
+    df_eng_scaled["user_id"] = df["user_id"]
 
-    # Clustering by engagement score
+    # KMeans segmentation
     kmeans = KMeans(n_clusters=3, random_state=42)
-    df_scaled["segment_kmeans"] = kmeans.fit_predict(df_scaled[["LES"]])
-    cluster_order = df_scaled.groupby("segment_kmeans")["LES"].mean().sort_values().index
-    segment_labels = {
+    df_eng_scaled["segment_kmeans"] = kmeans.fit_predict(df_eng_scaled[["LES"]])
+    cluster_order = df_eng_scaled.groupby("segment_kmeans")["LES"].mean().sort_values().index
+    segment_map = {
         cluster_order[0]: "Low Engagement",
         cluster_order[1]: "Medium Engagement",
         cluster_order[2]: "High Engagement"
     }
-    df_scaled["segment_label"] = df_scaled["segment_kmeans"].map(segment_labels)
+    df_eng_scaled["segment_label"] = df_eng_scaled["segment_kmeans"].map(segment_map)
 
-    # Merge back to original data
-    mart_user_LES_Neo_Bank = df_scaled[["user_id", "LES", "segment_label"]].merge(
-        df, on="user_id", how="left"
-    )
+    # Merge segment info
+    mart_user_LES_Neo_Bank = df_eng_scaled[["user_id", "LES", "segment_label"]].merge(df, on="user_id", how="left")
 
-    # Predict churn probability
-    X_full_scaled = ML_scaler.transform(X)
-    churn_probability = log_reg_model.predict_proba(X_full_scaled)[:, 0]
-    df_churn = pd.DataFrame({
-        "user_id": df["user_id"],
-        "churn_probability": churn_probability
-    })
+    # Predict churn
+    X_scaled = scaler.transform(X)
+    mart_user_LES_Neo_Bank["churn_probability"] = clf.predict_proba(X_scaled)[:, 0]
 
-    # Final merged DataFrame
-    final_df = mart_user_LES_Neo_Bank.merge(df_churn, on="user_id", how="left")
-    return final_df
+    return mart_user_LES_Neo_Bank
