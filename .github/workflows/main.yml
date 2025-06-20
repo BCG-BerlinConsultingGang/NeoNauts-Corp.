@@ -1,0 +1,50 @@
+name: Deploy dbt Docs
+on:
+  push:
+    branches: [main]  # Change to [main] if your default branch is main
+  workflow_dispatch:
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣  Check out repository
+      - uses: actions/checkout@v3
+      # 2️⃣  Set up Python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      # 3️⃣  Install dbt and BigQuery adapter
+      - name: Install dbt
+        run: |
+          python -m pip install --upgrade pip
+          pip install dbt-bigquery
+      # 4️⃣  Create profiles.yml with service‑account key
+      - name: Configure dbt profile
+        env:
+          GCP_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}
+        run: |
+          mkdir -p ~/.dbt
+          echo "$GCP_KEY" > /tmp/keyfile.json
+          printf '%s\n' \
+            "default:" \
+            "  target: prod" \
+            "  outputs:" \
+            "    prod:" \
+            "      type: bigquery" \
+            "      method: service-account" \
+            "      project: BCG Berlin Consulting Gang" \
+            "      dataset: neonauts" \
+            "      threads: 1" \
+            "      timeout_seconds: 300" \
+            "      keyfile: /tmp/keyfile.json" \
+          > ~/.dbt/profiles.yml
+      # 5️⃣  Build models (optional but recommended)
+      - name: Build models
+        run: dbt build
+      # 6️⃣  Generate static documentation
+      - name: Generate docs
+        run: |
+          dbt docs generate --static
+          mkdir -p docs-tmp
+          cp target/index.html docs-tmp/
+          cp target/manifest.json target/catalog.json docs-tmp/
