@@ -22,7 +22,7 @@ The final deliverables consist of:
 1. Initial familiarization with the dataset
 2. Ideation & set up of project in Notion
 3. Selection of tech stack (SQL, dbt, BigQuery, Google Looker Studio, Python, Github)
-4. Data Cleaning (SQL)
+4. EDA & Data Cleaning (SQL)
 5. Data Enrichment & Feature Engineering (SQL & Python)
 6. Creation of a user engagement scoring system and user segments based on it
 7. Identifying retention levers and introducing recommendations to retain users
@@ -30,7 +30,7 @@ The final deliverables consist of:
 
 ## Tech Stack
 - **Data Warehouse:** BigQuery
-- **Data Platform (EDA, Cleaning, Transformation, IDE):** dbt Cloud
+- **Data Platform (Cleaning, Transformation, IDE):** dbt Cloud
 - **Version Control:** Github
 - **Business Intelligence & Visualization:** Google Looker Studio
 - **Scripting/Modelling:** Google Colab (Python)
